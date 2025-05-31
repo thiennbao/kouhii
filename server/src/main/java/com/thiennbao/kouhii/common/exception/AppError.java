@@ -12,9 +12,17 @@ import org.springframework.http.HttpStatus;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum AppError {
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 5000, "Internal server error"),
+    // 1xxx: Authentication errors
+    LOGIN_FAILED(HttpStatus.UNAUTHORIZED, 1001, "Incorrect username or password"),
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 1002, "Invalid token"),
+    EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, 1003, "Token has expired"),
+    // 2xxx: Validation errors
+    // 3xxx: Resource errors
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "Account not found"),
-    USERNAME_CONFLICT(HttpStatus.CONFLICT, 4001, "Username already exists");
+    // 4xxx: Business logic errors
+    USERNAME_CONFLICT(HttpStatus.CONFLICT, 4001, "Username already exists"),
+    // 5xxx: System errors
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 5000, "Internal server error");
 
     HttpStatus status;
     int code;
