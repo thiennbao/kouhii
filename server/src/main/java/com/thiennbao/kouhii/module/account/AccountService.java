@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 public class AccountService {
     AccountRepository accountRepository;
     AccountMapper accountMapper;
+    PasswordEncoder passwordEncoder;
 
     List<AccountResponse> getAccounts() {
         return accountRepository.findAll().stream().map(accountMapper::toResponse).toList();
@@ -31,6 +33,7 @@ public class AccountService {
 
     AccountResponse createAccount(AccountRequest request) {
         Account account = accountMapper.toEntity(request);
+        account.setPassword(passwordEncoder.encode(request.getPassword()));
         try {
             return accountMapper.toResponse(accountRepository.save(account));
         } catch (DataIntegrityViolationException _) {
