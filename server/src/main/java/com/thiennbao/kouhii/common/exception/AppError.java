@@ -14,9 +14,8 @@ import org.springframework.http.HttpStatus;
 public enum AppError {
     // 1xxx: Authentication errors
     FORBIDDEN(HttpStatus.FORBIDDEN, 1000, "Do not have permission"),
-    LOGIN_FAILED(HttpStatus.UNAUTHORIZED, 1001, "Incorrect username or password"),
-    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 1002, "Invalid token"),
-    EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, 1003, "Token has expired"),
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 1001, "Invalid token"),
+    LOGIN_FAILED(HttpStatus.UNAUTHORIZED, 1002, "Incorrect username or password"),
     // 2xxx: Validation errors
     // 3xxx: Resource errors
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "Account not found"),
