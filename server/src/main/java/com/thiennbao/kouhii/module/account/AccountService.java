@@ -9,6 +9,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +24,18 @@ public class AccountService {
     AccountMapper accountMapper;
     PasswordEncoder passwordEncoder;
 
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
     List<AccountResponse> getAccounts() {
         return accountRepository.findAll().stream().map(accountMapper::toResponse).toList();
     }
 
+    @PostAuthorize("hasAuthority('SCOPE_ADMIN') or returnObject.username == authentication.name")
     AccountResponse getAccount(String id) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new AppException(AppError.ACCOUNT_NOT_FOUND));
         return accountMapper.toResponse(account);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     AccountResponse createAccount(AccountRequest request) {
         Account account = accountMapper.toEntity(request);
         account.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -41,6 +46,7 @@ public class AccountService {
         }
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     AccountResponse updateAccount(String id, AccountRequest request) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new AppException(AppError.ACCOUNT_NOT_FOUND));
         accountMapper.update(account, request);
@@ -51,6 +57,7 @@ public class AccountService {
         }
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     AccountResponse deleteAccount(String id) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new AppException(AppError.ACCOUNT_NOT_FOUND));
         accountRepository.delete(account);

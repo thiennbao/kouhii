@@ -27,7 +27,7 @@ import java.util.UUID;
 public class JwtService {
     @NonFinal
     @Value("${jwt.signerKey}")
-    String SIGNER_KEY;
+    String signerKey;
 
     String generateToken(Account account) {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
@@ -35,23 +35,24 @@ public class JwtService {
                 .subject(account.getUsername())
                 .issuer("kouhii.com")
                 .issueTime(new Date())
-                .expirationTime(new Date(Instant.now().plus(7, ChronoUnit.DAYS).toEpochMilli()))
+                .expirationTime(new Date(Instant.now().plus(30, ChronoUnit.DAYS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
+                .claim("scope", account.getRole())
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(jwsHeader, payload);
         try {
-            jwsObject.sign(new MACSigner(SIGNER_KEY.getBytes()));
+            jwsObject.sign(new MACSigner(signerKey.getBytes()));
         } catch (JOSEException e) {
             throw new RuntimeException(e);
         }
         return jwsObject.serialize();
     }
 
-    boolean verifyToken(String token) {
+    public boolean verifyToken(String token) {
         try {
             SignedJWT signedJWT = SignedJWT.parse(token);
-            boolean verified = signedJWT.verify(new MACVerifier(SIGNER_KEY.getBytes()));
+            boolean verified = signedJWT.verify(new MACVerifier(signerKey.getBytes()));
             if (!verified) throw new AppException(AppError.INVALID_TOKEN);
             boolean expired = signedJWT.getJWTClaimsSet().getExpirationTime().before(new Date());
             if (expired) throw new AppException(AppError.EXPIRED_TOKEN);

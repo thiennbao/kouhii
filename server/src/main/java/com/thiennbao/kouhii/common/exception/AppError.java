@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum AppError {
     // 1xxx: Authentication errors
+    FORBIDDEN(HttpStatus.FORBIDDEN, 1000, "Do not have permission"),
     LOGIN_FAILED(HttpStatus.UNAUTHORIZED, 1001, "Incorrect username or password"),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 1002, "Invalid token"),
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, 1003, "Token has expired"),
