@@ -8,6 +8,7 @@ import com.thiennbao.kouhii.module.role.data.RoleResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +34,11 @@ public class RoleService {
         Role role = roleMapper.toEntity(request);
         try {
             return roleMapper.toResponse(roleRepository.save(role));
-        } catch (DataIntegrityViolationException _) {
-            throw new AppException(AppError.ROLE_NAME_CONFLICT);
+        } catch (DataIntegrityViolationException exception) {
+            if (exception.getCause() instanceof ConstraintViolationException) {
+                throw new AppException(AppError.ROLE_NAME_CONFLICT);
+            }
+            throw exception;
         }
     }
 
@@ -43,8 +47,11 @@ public class RoleService {
         roleMapper.update(role, request);
         try {
             return roleMapper.toResponse(roleRepository.save(role));
-        } catch (DataIntegrityViolationException _) {
-            throw new AppException(AppError.ROLE_NAME_CONFLICT);
+        } catch (DataIntegrityViolationException exception) {
+            if (exception.getCause() instanceof ConstraintViolationException) {
+                throw new AppException(AppError.ROLE_NAME_CONFLICT);
+            }
+            throw exception;
         }
     }
 
