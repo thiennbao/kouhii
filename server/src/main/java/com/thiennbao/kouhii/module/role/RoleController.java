@@ -1,10 +1,8 @@
 package com.thiennbao.kouhii.module.role;
 
 import com.thiennbao.kouhii.common.response.ApiResponse;
-import com.thiennbao.kouhii.module.role.data.Permission;
-import com.thiennbao.kouhii.module.role.data.PermissionRequest;
-import com.thiennbao.kouhii.module.role.data.RoleRequest;
-import com.thiennbao.kouhii.module.role.data.RoleResponse;
+import com.thiennbao.kouhii.module.role.data.*;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -30,12 +28,12 @@ public class RoleController {
     }
 
     @PostMapping
-    ApiResponse<RoleResponse> createRole(@RequestBody RoleRequest request) {
+    ApiResponse<RoleResponse> createRole(@Valid @RequestBody RoleCreateRequest request) {
         return ApiResponse.success(roleService.createRole(request));
     }
 
     @PutMapping("/{id}")
-    ApiResponse<RoleResponse> updateRole(@PathVariable String id, @RequestBody RoleRequest request) {
+    ApiResponse<RoleResponse> updateRole(@PathVariable String id, @Valid @RequestBody RoleUpdateRequest request) {
         return ApiResponse.success(roleService.updateRole(id, request));
     }
 
@@ -45,7 +43,7 @@ public class RoleController {
     }
 
     @PostMapping("/{id}/permissions")
-    ApiResponse<RoleResponse> addPermission(@PathVariable String id, @RequestBody PermissionRequest request) {
+    ApiResponse<RoleResponse> addPermission(@PathVariable String id, @Valid @RequestBody PermissionRequest request) {
         return ApiResponse.success(roleService.addPermission(id, request.getPermission()));
     }
 

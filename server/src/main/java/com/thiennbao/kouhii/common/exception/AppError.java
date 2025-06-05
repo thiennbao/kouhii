@@ -17,6 +17,8 @@ public enum AppError {
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 1001, "Invalid token"),
     LOGIN_FAILED(HttpStatus.UNAUTHORIZED, 1002, "Incorrect username or password"),
     // 2xxx: Validation errors
+    BAD_REQUEST(HttpStatus.BAD_REQUEST, 2000, "Bad request"),
+    ROLE_NAME_INVALID(HttpStatus.BAD_REQUEST, 2001, "Role name is required"),
     // 3xxx: Resource errors
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "Account not found"),
     ROLE_NOT_FOUND(HttpStatus.NOT_FOUND, 3002, "Role not found"),

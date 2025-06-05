@@ -18,10 +18,9 @@ public class Role {
     @Column(nullable = false, unique = true)
     String name;
 
-    @Column(nullable = false)
+    @Column
     String description;
 
-    @Column(nullable = false)
     @ElementCollection(targetClass = Permission.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     Set<Permission> permissions;

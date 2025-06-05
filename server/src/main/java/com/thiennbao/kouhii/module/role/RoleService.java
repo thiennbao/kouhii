@@ -2,10 +2,7 @@ package com.thiennbao.kouhii.module.role;
 
 import com.thiennbao.kouhii.common.exception.AppError;
 import com.thiennbao.kouhii.common.exception.AppException;
-import com.thiennbao.kouhii.module.role.data.Permission;
-import com.thiennbao.kouhii.module.role.data.Role;
-import com.thiennbao.kouhii.module.role.data.RoleRequest;
-import com.thiennbao.kouhii.module.role.data.RoleResponse;
+import com.thiennbao.kouhii.module.role.data.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -31,7 +28,7 @@ public class RoleService {
         return roleMapper.toResponse(role);
     }
 
-    RoleResponse createRole(RoleRequest request) {
+    RoleResponse createRole(RoleCreateRequest request) {
         Role role = roleMapper.toEntity(request);
         try {
             return roleMapper.toResponse(roleRepository.save(role));
@@ -43,7 +40,7 @@ public class RoleService {
         }
     }
 
-    RoleResponse updateRole(String id, RoleRequest request) {
+    RoleResponse updateRole(String id, RoleUpdateRequest request) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new AppException(AppError.ROLE_NOT_FOUND));
         roleMapper.update(role, request);
         try {
