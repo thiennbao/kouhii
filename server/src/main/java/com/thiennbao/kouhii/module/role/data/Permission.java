@@ -1,0 +1,6 @@
+package com.thiennbao.kouhii.module.role.data;
+
+public enum Permission {
+    READ_ACCOUNT_LIST, READ_ACCOUNT, CREATE_ACCOUNT, UPDATE_ACCOUNT, DELETE_ACCOUNT,
+    READ_ROLE_LIST, READ_ROLE, CREATE_ROLE, UPDATE_ROLE, DELETE_ROLE,
+}

@@ -19,8 +19,10 @@ public enum AppError {
     // 2xxx: Validation errors
     // 3xxx: Resource errors
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "Account not found"),
+    ROLE_NOT_FOUND(HttpStatus.NOT_FOUND, 3002, "Role not found"),
     // 4xxx: Business logic errors
     USERNAME_CONFLICT(HttpStatus.CONFLICT, 4001, "Username already exists"),
+    ROLE_NAME_CONFLICT(HttpStatus.CONFLICT, 4002, "Role name already exists"),
     // 5xxx: System errors
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 5000, "Internal server error");
 
