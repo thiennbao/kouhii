@@ -1,5 +1,6 @@
 package com.thiennbao.kouhii.module.role.data;
 
+import com.thiennbao.kouhii.common.validator.EnumNameValid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -15,5 +16,5 @@ public class RoleCreateRequest {
 
     String description;
 
-    Set<Permission> permissions;
+    Set<@EnumNameValid(enumClass = Permission.class, message = "ROLE_PERMISSION_INVALID") String> permissions;
 }

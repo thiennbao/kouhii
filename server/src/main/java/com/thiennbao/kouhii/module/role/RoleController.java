@@ -1,15 +1,18 @@
 package com.thiennbao.kouhii.module.role;
 
 import com.thiennbao.kouhii.common.response.ApiResponse;
+import com.thiennbao.kouhii.common.validator.EnumNameValid;
 import com.thiennbao.kouhii.module.role.data.*;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/role")
 @RequiredArgsConstructor
@@ -48,7 +51,10 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}/permissions/{permission}")
-    ApiResponse<RoleResponse> removePermission(@PathVariable String id, @PathVariable Permission permission) {
+    ApiResponse<RoleResponse> removePermission(
+            @PathVariable String id,
+            @EnumNameValid(enumClass = Permission.class, message = "ROLE_PERMISSION_INVALID") @PathVariable String permission
+    ) {
         return ApiResponse.success(roleService.removePermission(id, permission));
     }
 }

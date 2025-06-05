@@ -59,15 +59,15 @@ public class RoleService {
         return roleMapper.toResponse(role);
     }
 
-    RoleResponse addPermission(String id, Permission permission) {
+    RoleResponse addPermission(String id, String permission) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new AppException(AppError.ROLE_NOT_FOUND));
-        role.getPermissions().add(permission);
+        role.getPermissions().add(Permission.valueOf(permission));
         return roleMapper.toResponse(roleRepository.save(role));
     }
 
-    RoleResponse removePermission(String id, Permission permission) {
+    RoleResponse removePermission(String id, String permission) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new AppException(AppError.ROLE_NOT_FOUND));
-        role.getPermissions().remove(permission);
+        role.getPermissions().remove(Permission.valueOf(permission));
         return roleMapper.toResponse(roleRepository.save(role));
     }
 }
