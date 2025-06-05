@@ -2,6 +2,7 @@ package com.thiennbao.kouhii.module.role;
 
 import com.thiennbao.kouhii.common.exception.AppError;
 import com.thiennbao.kouhii.common.exception.AppException;
+import com.thiennbao.kouhii.module.role.data.Permission;
 import com.thiennbao.kouhii.module.role.data.Role;
 import com.thiennbao.kouhii.module.role.data.RoleRequest;
 import com.thiennbao.kouhii.module.role.data.RoleResponse;
@@ -59,5 +60,17 @@ public class RoleService {
         Role role = roleRepository.findById(id).orElseThrow(() -> new AppException(AppError.ROLE_NOT_FOUND));
         roleRepository.delete(role);
         return roleMapper.toResponse(role);
+    }
+
+    RoleResponse addPermission(String id, Permission permission) {
+        Role role = roleRepository.findById(id).orElseThrow(() -> new AppException(AppError.ROLE_NOT_FOUND));
+        role.getPermissions().add(permission);
+        return roleMapper.toResponse(roleRepository.save(role));
+    }
+
+    RoleResponse removePermission(String id, Permission permission) {
+        Role role = roleRepository.findById(id).orElseThrow(() -> new AppException(AppError.ROLE_NOT_FOUND));
+        role.getPermissions().remove(permission);
+        return roleMapper.toResponse(roleRepository.save(role));
     }
 }

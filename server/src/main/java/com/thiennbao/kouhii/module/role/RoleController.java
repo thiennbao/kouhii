@@ -1,6 +1,8 @@
 package com.thiennbao.kouhii.module.role;
 
 import com.thiennbao.kouhii.common.response.ApiResponse;
+import com.thiennbao.kouhii.module.role.data.Permission;
+import com.thiennbao.kouhii.module.role.data.PermissionRequest;
 import com.thiennbao.kouhii.module.role.data.RoleRequest;
 import com.thiennbao.kouhii.module.role.data.RoleResponse;
 import lombok.AccessLevel;
@@ -29,7 +31,6 @@ public class RoleController {
 
     @PostMapping
     ApiResponse<RoleResponse> createRole(@RequestBody RoleRequest request) {
-        System.out.println(request.getPermissions());
         return ApiResponse.success(roleService.createRole(request));
     }
 
@@ -41,5 +42,15 @@ public class RoleController {
     @DeleteMapping("/{id}")
     ApiResponse<RoleResponse> deleteRole(@PathVariable String id) {
         return ApiResponse.success(roleService.deleteRole(id));
+    }
+
+    @PostMapping("/{id}/permissions")
+    ApiResponse<RoleResponse> addPermission(@PathVariable String id, @RequestBody PermissionRequest request) {
+        return ApiResponse.success(roleService.addPermission(id, request.getPermission()));
+    }
+
+    @DeleteMapping("/{id}/permissions/{permission}")
+    ApiResponse<RoleResponse> removePermission(@PathVariable String id, @PathVariable Permission permission) {
+        return ApiResponse.success(roleService.removePermission(id, permission));
     }
 }
