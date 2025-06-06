@@ -1,6 +1,5 @@
 package com.thiennbao.kouhii.module.account.data;
 
-import com.thiennbao.kouhii.module.role.data.RoleResponse;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -13,5 +12,5 @@ import java.util.Set;
 public class AccountResponse {
     String id;
     String username;
-    Set<RoleResponse> roles = new HashSet<>();
+    Set<String> roles = new HashSet<>();
 }
