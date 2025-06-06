@@ -1,9 +1,12 @@
 package com.thiennbao.kouhii.module.account.data;
 
+import com.thiennbao.kouhii.module.role.data.Role;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,7 +22,6 @@ public class Account {
     @Column(nullable = false)
     String password;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    AccountRole role = AccountRole.USER;
+    @ManyToMany
+    Set<Role> roles;
 }

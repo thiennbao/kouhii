@@ -70,4 +70,8 @@ public class RoleService {
         role.getPermissions().remove(Permission.valueOf(permission));
         return roleMapper.toResponse(roleRepository.save(role));
     }
+
+    public Role getRoleByName(String name) {
+        return roleRepository.findByName(name).orElseThrow(() -> new AppException(AppError.ROLE_NOT_FOUND));
+    }
 }

@@ -1,8 +1,10 @@
 package com.thiennbao.kouhii.module.account;
 
 import com.thiennbao.kouhii.common.response.ApiResponse;
-import com.thiennbao.kouhii.module.account.data.AccountRequest;
+import com.thiennbao.kouhii.module.account.data.AccountCreateRequest;
 import com.thiennbao.kouhii.module.account.data.AccountResponse;
+import com.thiennbao.kouhii.module.account.data.AccountUpdateRequest;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,12 +30,12 @@ public class AccountController {
     }
 
     @PostMapping
-    ApiResponse<AccountResponse> createAccount(@RequestBody AccountRequest request) {
+    ApiResponse<AccountResponse> createAccount(@Valid @RequestBody AccountCreateRequest request) {
         return ApiResponse.success(accountService.createAccount(request));
     }
 
     @PutMapping("/{id}")
-    ApiResponse<AccountResponse> updateAccount(@PathVariable("id") String id, @RequestBody AccountRequest request) {
+    ApiResponse<AccountResponse> updateAccount(@PathVariable("id") String id, @Valid @RequestBody AccountUpdateRequest request) {
         return ApiResponse.success(accountService.updateAccount(id, request));
     }
 

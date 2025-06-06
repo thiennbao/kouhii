@@ -21,6 +21,8 @@ public enum AppError {
     ROLE_NAME_INVALID(HttpStatus.BAD_REQUEST, 2001, "Role name is required"),
     ROLE_PERMISSION_NULL(HttpStatus.BAD_REQUEST, 2002, "Permission is required"),
     ROLE_PERMISSION_INVALID(HttpStatus.BAD_REQUEST, 2003, "Invalid permission name"),
+    ACCOUNT_USERNAME_INVALID(HttpStatus.BAD_REQUEST, 2004, "Username must be at least 4 characters"),
+    ACCOUNT_PASSWORD_INVALID(HttpStatus.BAD_REQUEST, 2005, "Password must be at least 8 characters"),
     // 3xxx: Resource errors
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "Account not found"),
     ROLE_NOT_FOUND(HttpStatus.NOT_FOUND, 3002, "Role not found"),
