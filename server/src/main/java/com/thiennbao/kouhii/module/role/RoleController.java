@@ -46,7 +46,7 @@ public class RoleController {
     }
 
     @PostMapping("/{id}/permissions")
-    ApiResponse<RoleResponse> addPermission(@PathVariable String id, @Valid @RequestBody PermissionRequest request) {
+    ApiResponse<RoleResponse> addPermission(@PathVariable String id, @Valid @RequestBody PermissionAddRequest request) {
         return ApiResponse.success(roleService.addPermission(id, request.getPermission()));
     }
 

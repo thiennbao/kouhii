@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PermissionRequest {
+public class PermissionAddRequest {
     @NotNull(message = "ROLE_PERMISSION_NULL")
     @EnumNameValid(enumClass = Permission.class, message = "ROLE_PERMISSION_INVALID")
     String permission;
