@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -29,7 +31,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(requests -> requests.anyRequest().permitAll());
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2
-                .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()))
+                .jwt(jwtConfigurer -> jwtConfigurer
+                        .decoder(jwtDecoder())
+                        .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                )
                 .authenticationEntryPoint((_, response, _) -> {
                     AppError appError = AppError.INVALID_TOKEN;
                     ObjectMapper objectMapper = new ObjectMapper();
@@ -51,5 +56,14 @@ public class SecurityConfig {
     JwtDecoder jwtDecoder() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), MacAlgorithm.HS512.getName());
         return NimbusJwtDecoder.withSecretKey(secretKeySpec).macAlgorithm(MacAlgorithm.HS512).build();
+    }
+
+    @Bean
+    JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        return jwtAuthenticationConverter;
     }
 }
