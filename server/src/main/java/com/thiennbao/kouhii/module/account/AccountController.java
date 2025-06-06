@@ -4,6 +4,7 @@ import com.thiennbao.kouhii.common.response.ApiResponse;
 import com.thiennbao.kouhii.module.account.data.AccountCreateRequest;
 import com.thiennbao.kouhii.module.account.data.AccountResponse;
 import com.thiennbao.kouhii.module.account.data.AccountUpdateRequest;
+import com.thiennbao.kouhii.module.account.data.RoleAddRequest;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,15 @@ public class AccountController {
     @DeleteMapping("/{id}")
     ApiResponse<AccountResponse> deleteAccount(@PathVariable("id") String id) {
         return ApiResponse.success(accountService.deleteAccount(id));
+    }
+
+    @PostMapping("/{id}/roles")
+    ApiResponse<AccountResponse> addRole(@PathVariable("id") String id, @Valid @RequestBody RoleAddRequest request) {
+        return ApiResponse.success(accountService.addRole(id, request.getRole()));
+    }
+
+    @DeleteMapping("/{id}/roles/{role}")
+    ApiResponse<AccountResponse> deleteRole(@PathVariable("id") String id, @PathVariable("role") String role) {
+        return ApiResponse.success(accountService.removeRole(id, role));
     }
 }

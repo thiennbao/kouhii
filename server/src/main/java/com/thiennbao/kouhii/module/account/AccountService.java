@@ -75,4 +75,16 @@ public class AccountService {
         accountRepository.delete(account);
         return accountMapper.toResponse(account);
     }
+
+    AccountResponse addRole(String id, String role) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new AppException(AppError.ACCOUNT_NOT_FOUND));
+        account.getRoles().add(roleService.getRoleByName(role));
+        return accountMapper.toResponse(accountRepository.save(account));
+    }
+
+    AccountResponse removeRole(String id, String role) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new AppException(AppError.ACCOUNT_NOT_FOUND));
+        account.getRoles().remove(roleService.getRoleByName(role));
+        return accountMapper.toResponse(accountRepository.save(account));
+    }
 }
