@@ -32,7 +32,7 @@ public class AccountService {
         return accountRepository.findAll().stream().map(accountMapper::toResponse).toList();
     }
 
-    @PreAuthorize("hasAuthority('READ_ACCOUNT')")
+    @PreAuthorize("hasAuthority('READ_ACCOUNT') or #id == authentication.name")
     AccountResponse getAccount(String id) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new AppException(AppError.ACCOUNT_NOT_FOUND));
         return accountMapper.toResponse(account);
@@ -52,7 +52,7 @@ public class AccountService {
         }
     }
 
-    @PreAuthorize("hasAuthority('UPDATE_ACCOUNT_INFO')")
+    @PreAuthorize("hasAuthority('UPDATE_ACCOUNT_INFO') or #id == authentication.name")
     AccountResponse updateAccount(String id, AccountUpdateRequest request) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new AppException(AppError.ACCOUNT_NOT_FOUND));
         accountMapper.update(account, request);
@@ -70,7 +70,7 @@ public class AccountService {
         }
     }
 
-    @PreAuthorize("hasAuthority('DELETE_ACCOUNT')")
+    @PreAuthorize("hasAuthority('DELETE_ACCOUNT') or #id == authentication.name")
     AccountResponse deleteAccount(String id) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new AppException(AppError.ACCOUNT_NOT_FOUND));
         accountRepository.delete(account);
