@@ -3,6 +3,8 @@ package com.thiennbao.kouhii.module.auth;
 import com.thiennbao.kouhii.common.response.ApiResponse;
 import com.thiennbao.kouhii.module.auth.data.AuthRequest;
 import com.thiennbao.kouhii.module.auth.data.AuthResponse;
+import com.thiennbao.kouhii.module.auth.data.RevokeRequest;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,5 +23,10 @@ public class AuthController {
     @PostMapping("/login")
     ApiResponse<AuthResponse> authenticate(@RequestBody AuthRequest request) {
         return ApiResponse.success(authService.authenticate(request));
+    }
+
+    @PostMapping("/logout")
+    ApiResponse<Void> revoke(@Valid @RequestBody RevokeRequest request) {
+        return ApiResponse.success(authService.revoke(request));
     }
 }

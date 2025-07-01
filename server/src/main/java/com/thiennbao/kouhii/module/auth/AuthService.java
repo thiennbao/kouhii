@@ -6,6 +6,8 @@ import com.thiennbao.kouhii.module.account.AccountRepository;
 import com.thiennbao.kouhii.module.account.data.Account;
 import com.thiennbao.kouhii.module.auth.data.AuthRequest;
 import com.thiennbao.kouhii.module.auth.data.AuthResponse;
+import com.thiennbao.kouhii.module.auth.data.RevokeRequest;
+import com.thiennbao.kouhii.module.token.JwtService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,5 +28,10 @@ public class AuthService {
             throw new AppException(AppError.LOGIN_FAILED);
         }
         return new AuthResponse(jwtService.generateToken(account));
+    }
+
+    Void revoke(RevokeRequest request) {
+        jwtService.revokeToken(request.getToken());
+        return null;
     }
 }
