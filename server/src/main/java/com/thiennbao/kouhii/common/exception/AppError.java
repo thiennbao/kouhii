@@ -16,6 +16,7 @@ public enum AppError {
     FORBIDDEN(HttpStatus.FORBIDDEN, 1000, "Do not have permission"),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 1001, "Invalid token"),
     LOGIN_FAILED(HttpStatus.UNAUTHORIZED, 1002, "Incorrect username or password"),
+
     // 2xxx: Validation errors
     BAD_REQUEST(HttpStatus.BAD_REQUEST, 2000, "Bad request"),
     ROLE_NAME_INVALID(HttpStatus.BAD_REQUEST, 2001, "Role name is required"),
@@ -24,12 +25,21 @@ public enum AppError {
     ACCOUNT_USERNAME_INVALID(HttpStatus.BAD_REQUEST, 2004, "Username must be at least 4 characters"),
     ACCOUNT_PASSWORD_INVALID(HttpStatus.BAD_REQUEST, 2005, "Password must be at least 8 characters"),
     AUTH_REVOKE_INVALID(HttpStatus.BAD_REQUEST, 2006, "Token is required"),
+    MENU_ITEM_NAME_INVALID(HttpStatus.BAD_REQUEST, 2007, "Menu item name is required"),
+    MENU_ITEM_DESCRIPTION_INVALID(HttpStatus.BAD_REQUEST, 2008, "Menu item description is required"),
+    MENU_ITEM_PRICE_INVALID(HttpStatus.BAD_REQUEST, 2009, "Menu item price must be greater than or equal to 0."),
+    MENU_IMAGE_INVALID(HttpStatus.BAD_REQUEST, 2010, "Menu item image is required"),
+
     // 3xxx: Resource errors
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "Account not found"),
     ROLE_NOT_FOUND(HttpStatus.NOT_FOUND, 3002, "Role not found"),
+    MENU_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, 3001, "Menu item not found"),
+
     // 4xxx: Business logic errors
     USERNAME_CONFLICT(HttpStatus.CONFLICT, 4001, "Username already exists"),
     ROLE_NAME_CONFLICT(HttpStatus.CONFLICT, 4002, "Role name already exists"),
+    MENU_ITEM_NAME_CONFLICT(HttpStatus.CONFLICT, 4003, "Menu item name already exists"),
+
     // 5xxx: System errors
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 5000, "Internal server error");
 
